@@ -347,7 +347,10 @@ const commands = {
                 return await sock.sendMessage(m.key.remoteJid, { text: '❌ ليس لديك حساب بنكي. استخدم الأمر .انش لإنشاء حساب.' }, { quoted: m });
             }
             
-            const user = users[sender];
+          if (!isAuthorized) {
+    return await sock.sendMessage(m.key.remoteJid, { text: '⚠️ عذراً، يجب أن يمنحك المالك صلاحية لاستخدام البوت.' }, { quoted: m });
+}
+  const user = users[sender];
             const msg = `🏦 *بيانات حسابك البنكي*\n\n👤 المستخدم: @${sender.split('@')[0]}\n💳 رقم الحساب: ${user.accountNumber}\n💵 رصيد الحساب: ${user.balance}$\n👛 رصيد المحفظة: ${user.wallet}$`;
             await sock.sendMessage(m.key.remoteJid, { text: msg, mentions: [sender] }, { quoted: m });
         }
