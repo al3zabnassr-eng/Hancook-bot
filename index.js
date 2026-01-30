@@ -105,7 +105,9 @@ async function connectToWhatsApp() {
     sock.ev.on('creds.update', saveCreds);
 
     sock.ev.on('messages.upsert', async (m) => {
-        try {
+        // التعديل: إرسال PHONE_NUMBER بدلاً من OWNER_JID كمعامل ثالث
+await handleMessage(sock, message, PHONE_NUMBER, PHONE_NUMBER);
+
             const message = m.messages[0];
             if (!message.message || message.key.fromMe) return;
             await handleMessage(sock, message, OWNER_JID, PHONE_NUMBER);
